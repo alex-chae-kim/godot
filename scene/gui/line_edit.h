@@ -103,6 +103,7 @@ private:
 	String placeholder_translated;
 	String secret_character = U"•";
 	String ime_text;
+	//String last_ime_text;
 	Point2 ime_selection;
 
 	RID text_rid;

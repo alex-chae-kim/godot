@@ -1370,6 +1370,25 @@ void LineEdit::_notification(int p_what) {
 
 		case NOTIFICATION_FOCUS_EXIT: {
 			if (editing) {
+				//first test
+				//insert_text_at_caret("test");
+
+				//second test
+				/*
+				* String ime_text = DisplayServer::get_singleton()->ime_get_text(); 
+				if (!ime_text.is_empty()) { // Check if IME text exists
+					insert_text_at_caret("test");
+				}
+				*/
+
+				//third test
+				/*
+				* String ime_text = last_ime_text;
+				if (!last_ime_text.is_empty()) { // Check if IME text exists
+					insert_text_at_caret("test");
+				}
+				*/
+
 				unedit();
 				emit_signal(SNAME("editing_toggled"), false);
 			}
@@ -1379,11 +1398,20 @@ void LineEdit::_notification(int p_what) {
 			if (editing) {
 				ime_text = DisplayServer::get_singleton()->ime_get_text();
 				ime_selection = DisplayServer::get_singleton()->ime_get_selection();
+				//last_ime_text = ime_text;
 
 				if (!ime_text.is_empty()) {
 					selection_delete();
+					insert_text_at_caret(ime_text); //fifth test. Solves bug but creates new one where more than the intended number of characters are typed sometimes
+					ime_text = "";
 				}
-
+				//fourth test
+				/*
+				if (!has_focus()) {
+					insert_text_at_caret(ime_text);
+				}
+				*/
+				
 				_shape();
 				set_caret_column(caret_column); // Update scroll_offset.
 			}
